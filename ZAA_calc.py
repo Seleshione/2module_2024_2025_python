@@ -30,7 +30,7 @@ def trig_test(x, function_type):
         return str(e)
     except ValueError as e:
         return str(e)
-    
+
 def convert_test(num, base):
     if base < 2 or base > 36:
         raise ValueError("Основание системы счисления должно быть в диапазоне от 2 до 36.")
@@ -64,54 +64,52 @@ def evaluate_expression_test(expression):
         return result
     except ZeroDivisionError:
         return "Данное выражение не определено"
-    
-def process_key(key, entry_text, abs_value=0):
+
+def process_key(key, entry_text):
     try:
         if key == "=":
             str_1 = "0123456789*)(/."
             if not entry_text or entry_text[0] not in str_1:
-                return "Ошибка: неверный ввод", abs_value
+                return "Ошибка: неверный ввод"
             result = evaluate_expression_test(entry_text)
             if isinstance(result, str):  
-                return "Данное выражение не определено", abs_value
-            return str(result), result
+                return "Данное выражение не определено"
+            return str(result)
         elif key == "Del":
-            return "", abs_value
+            return ""
         elif key == "±":
             if not entry_text:
-                return "-", abs_value
-            return entry_text[1:] if entry_text[0] == "-" else "-" + entry_text, abs_value
+                return "-"
+            return entry_text[1:] if entry_text[0] == "-" else "-" + entry_text
         elif key == "Exit":
             root.destroy()
             sys.exit()
         elif key == "Abs":
-            return str(abs_value), abs_value
+            return ""
         elif key in ["sin", "cos", "tg", "ctg"]:
-            return str(trig_test(float(entry_text), key)), abs_value
+            return str(trig_test(float(entry_text), key))
         elif key == "x!":
-            return str(factorial_test(int(entry_text))), abs_value
+            return str(factorial_test(int(entry_text)))
         elif key in ["+", "-", "*", "/", ")", "("]:
-            return entry_text + key, abs_value
+            return entry_text + key
         elif key in ["2-ная", "3-ная", "4-ная", "5-ная", "6-ная", "7-ная", "8-ная", "9-ная", "16-ная"]:
             base = int(key.split('-')[0])
-            return str(convert_test(int(entry_text), base)), abs_value
+            return str(convert_test(int(entry_text), base))
         elif key == "xⁿ":
-            return entry_text + "**", abs_value
+            return entry_text + "**"
         else:  
-            return entry_text + key, abs_value
+            return entry_text + key
     except Exception as e:
-        return f"Ошибка: {str(e)}", abs_value
-    
+        return f"Ошибка: {str(e)}"
+
 def calc(key):
-    global Abs
     entry_text = calc_entry.get()
-    new_text, Abs = process_key(key, entry_text, Abs)
+    new_text = process_key(key, entry_text)
     calc_entry.delete(0, END)
     calc_entry.insert(END, new_text)
-    
+
 root = Tk()
 root.title("Calculator")
-Abs = 0
 calc_entry = Entry(root, width=50)
 calc_entry.grid(row=0, column=0, columnspan=5)
 calc_icons = [
@@ -119,7 +117,7 @@ calc_icons = [
     "1", "2", "3", "=", "xⁿ", "0", ".", "Del", "ctg",
     "sin", "cos", "tg", "2-ная", "3-ная", "4-ная",
     "5-ная", "6-ная", "7-ная", "8-ная", "9-ная", 
-    "16-ная", "x!", "Abs", "(", ")", "Exit", "±"]
+    "16-ная", "x!", "(", ")", "Exit", "±"]
 
 r, c = 1, 0
 for i in calc_icons:
