@@ -81,6 +81,9 @@ def process_key(key, entry_text, abs_value=0):
             if not entry_text:
                 return "-", abs_value
             return entry_text[1:] if entry_text[0] == "-" else "-" + entry_text, abs_value
+        elif key == "Exit":
+            root.destroy()
+            sys.exit()
         elif key == "Abs":
             return str(abs_value), abs_value
         elif key in ["sin", "cos", "tg", "ctg"]:
