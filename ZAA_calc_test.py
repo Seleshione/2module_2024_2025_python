@@ -3,54 +3,49 @@ from ZAA_calc import process_key, trig_test, evaluate_expression_test, factorial
 
 class TestCalculator(unittest.TestCase):
     def test_addition(self):
-        result, _ = process_key("=", "2+2")
+        result = process_key("=", "2+2")
         self.assertEqual(result, "4")
 
     def test_subtraction(self):
-        result, _ = process_key("=", "5-3")
+        result = process_key("=", "5-3")
         self.assertEqual(result, "2")
 
     def test_multiplication(self):
-        result, _ = process_key("=", "3*4")
+        result = process_key("=", "3*4")
         self.assertEqual(result, "12")
 
     def test_division(self):
-        result, _ = process_key("=", "10/2")
+        result = process_key("=", "10/2")
         self.assertEqual(result, "5.0")
 
     def test_trigonometry_sin(self):
-        result, _ = process_key("sin", "30")
+        result = process_key("sin", "30")
         self.assertEqual(result, str(trig_test(30, "sin")))
 
     def test_trigonometry_tg(self):
-        result, _ = process_key("tg", "45")
+        result = process_key("tg", "45")
         self.assertEqual(result, str(trig_test(45, "tg")))
 
     def test_factorial(self):
-        result, _ = process_key("x!", "5")
+        result = process_key("x!", "5")
         self.assertEqual(result, "120")
 
     def test_base_conversion(self):
-        result, _ = process_key("2-ная", "10")
+        result = process_key("2-ная", "10")
         self.assertEqual(result, "1010")
 
     def test_negative_sign(self):
-        result, _ = process_key("±", "5")
+        result = process_key("±", "5")
         self.assertEqual(result, "-5")
-        result, _ = process_key("±", "-5")
+        result = process_key("±", "-5")
         self.assertEqual(result, "5")
 
     def test_clear_entry(self):
-        result, _ = process_key("Del", "123")
+        result = process_key("Del", "123")
         self.assertEqual(result, "")
 
-    def test_abs(self):
-        result, abs_value = process_key("=", "5")
-        result, _ = process_key("Abs", "", abs_value)
-        self.assertEqual(result, "5")
-
     def test_invalid_expression(self):
-        result, _ = process_key("=", "5/0")
+        result = process_key("=", "5/0")
         self.assertEqual(result, "Данное выражение не определено")
         
     def test_addition_1(self):
@@ -82,28 +77,28 @@ class TestCalculator(unittest.TestCase):
             evaluate_expression_test("2 +")
             
     def test_factorial_of_zero(self):
-        self.assertEqual(factorial_test(0), 1)  
+        self.assertEqual(factorial_test(0), 1)
 
     def test_factorial_of_positive_integer(self):
-        self.assertEqual(factorial_test(5), 120)  
-        self.assertEqual(factorial_test(3), 6)    
-        self.assertEqual(factorial_test(1), 1)    
+        self.assertEqual(factorial_test(5), 120)
+        self.assertEqual(factorial_test(3), 6)
+        self.assertEqual(factorial_test(1), 1)
 
     def test_factorial_of_large_integer(self):
-        self.assertEqual(factorial_test(10), 3628800)  
+        self.assertEqual(factorial_test(10), 3628800)
 
     def test_factorial_of_negative_integer(self):
         with self.assertRaises(ValueError):
-            factorial_test(-1)  
+            factorial_test(-1)
 
     def test_factorial_of_non_integer(self):
         with self.assertRaises(ValueError):
-            factorial_test(4.5)  
+            factorial_test(4.5)
         with self.assertRaises(ValueError):
-            factorial_test("string")  
+            factorial_test("string")
         with self.assertRaises(ValueError):
-            factorial_test([])  
-            
+            factorial_test([])
+
     def test_convert_positive_integer_to_binary(self):
         self.assertEqual(convert_test(10, 2), '1010')
 
@@ -125,7 +120,7 @@ class TestCalculator(unittest.TestCase):
     def test_invalid_base_too_low(self):
         with self.assertRaises(ValueError):
             convert_test(10, 1)
-            
+
     def test_sin_positive(self):
         self.assertEqual(trig_test(30, "sin"), 0.5)
 
